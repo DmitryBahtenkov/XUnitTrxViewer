@@ -10,10 +10,12 @@ namespace TrxViewer.Pages
     public partial class TestRunPage : Page
     {
         private readonly TrxReaderService _trxReaderService;
+        private readonly TestRunService _testRunService;
         private List<UnitTestResult> _all;
-        public TestRunPage(TrxReaderService trxReaderService)
+        public TestRunPage(TrxReaderService trxReaderService, TestRunService testRunService)
         {
             _trxReaderService = trxReaderService;
+            _testRunService = testRunService;
             InitializeComponent();
 
             _all = _trxReaderService.ReadLast();
@@ -64,6 +66,16 @@ namespace TrxViewer.Pages
         private void UpdateBtn_OnClick(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
+        }
+
+        private void BtnExec_OnClick(object sender, RoutedEventArgs e)
+        {
+            var items = ListTests.SelectedItems
+                .Cast<UnitTestResult>()
+                .Select(x=>x.TestName)
+                .ToArray();
+            
+            _testRunService.ExecuteTestsByNames(items);
         }
     }
 }
