@@ -20,9 +20,7 @@ namespace TrxViewer.Pages
 
             _all = _trxReaderService.ReadLast();
             ListTests.ItemsSource = _all;
-            TxtAllCount.Text = $"Всего: {_all.Count}";
-            TxtPassedCount.Text = $"Пройдено: {_all.Count(x=>x.Outcome is "Passed")}";
-            TxtFailedCount.Text = $"Не пройдено: {_all.Count(x=>x.Outcome is "Failed")}";
+            Counters();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -61,11 +59,20 @@ namespace TrxViewer.Pages
             {
                 ListTests.ItemsSource = result;
             }
+
+            Counters();
         }
 
         private void UpdateBtn_OnClick(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
+        }
+
+        private void Counters()
+        {
+            TxtAllCount.Text = $"Всего: {_all.Count}";
+            TxtPassedCount.Text = $"Пройдено: {_all.Count(x=>x.Outcome is "Passed")}";
+            TxtFailedCount.Text = $"Не пройдено: {_all.Count(x=>x.Outcome is "Failed")}";
         }
 
         private void BtnExec_OnClick(object sender, RoutedEventArgs e)
@@ -75,13 +82,17 @@ namespace TrxViewer.Pages
                 .Select(x=>x.TestName)
                 .ToArray();
 
-            if (items.Length == 0)
+            switch (items.Length)
             {
-                MessageBox.Show("Не выбраны тесты");
-            }
-            else
-            {
-                _testRunService.ExecuteTestsByNames(items);
+                case 0:
+                    MessageBox.Show("Не выбраны тесты");
+                    break;
+                case > 7:
+                    MessageBox.Show("Выберите не больше 7 тестов");
+                    break;
+                default:
+                    _testRunService.ExecuteTestsByNames(items);
+                    break;
             }
         }
     }
