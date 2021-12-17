@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
+using TrxViewer.Pages;
+using TrxViewer.Services;
 
 namespace TrxViewer
 {
@@ -28,41 +30,9 @@ namespace TrxViewer
         public MainWindow()
         {
             InitializeComponent();
-            GetTests();
+            TrxFrame.Navigate(new TestRunPage(new TrxReaderService(new ConfigurationService())));
+            ConfigFrame.Navigate(new ConfigPage());
         }
-
-        public string ReadFile()
-        {
-            return File.ReadAllText(Path);
-        }
-
-        public void GetTests()
-        {
-            var xml = ReadFile();
-            xml = new string(xml.SkipWhile(x => x != '\n').ToArray());
-
-            var regex = new Regex("xmlns=\".*\"");
-
-            xml = regex.Replace(xml, "");
-            XmlSerializer serializer = new XmlSerializer(typeof(TestRun));
-            using (StringReader reader = new StringReader(xml))
-            {
-                var test = (TestRun)serializer.Deserialize(reader);
-                var testNameRegexp = new Regex(@"\(.*\)");
-                var tests = test.Results.First().UnitTestResult.Select(x=>
-                {
-                    x.TestName = x.TestName.Replace("Skillaz.Tests.", "");
-                    x.TestName = testNameRegexp.Replace(x.TestName, "").Split(".").Last();
-
-                    return x;
-                }).ToList();
-                ListTests.ItemsSource = tests;
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+        
     }
 }
