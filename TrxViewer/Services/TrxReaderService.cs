@@ -55,7 +55,7 @@ namespace TrxViewer.Services
             return result;
         }
 
-        public TestRun? ConvertXml(FileInfo fileInfo)
+        private static TestRun? ConvertXml(FileInfo fileInfo)
         {
             using var reader = new StreamReader(fileInfo.Open(FileMode.Open));
             var text = reader.ReadToEnd();

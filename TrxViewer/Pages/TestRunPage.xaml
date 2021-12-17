@@ -7,7 +7,36 @@
       mc:Ignorable="d"
       Title="TestRunPage" Height="500" Width="1000">
     <Grid>
-        <ListView Name="ListTests" HorizontalContentAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Name="TxtAllCount"></TextBlock>
+            <TextBlock Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Name="TxtPassedCount"></TextBlock>
+            <TextBlock Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Name="TxtFailedCount"></TextBlock>
+            <CheckBox Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      x:Name="PassedCheck" Checked="PassedCheck_OnChecked"
+                      Unchecked="PassedCheck_OnChecked" IsChecked="True">
+                Passed
+            </CheckBox>
+            <CheckBox Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      x:Name="FailedCheck" Checked="PassedCheck_OnChecked" 
+                      Unchecked="PassedCheck_OnChecked" IsChecked="True">
+                Failed
+            </CheckBox>
+            <CheckBox Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      x:Name="OtherCheck" Checked="PassedCheck_OnChecked" 
+                      Unchecked="PassedCheck_OnChecked" IsChecked="True">
+                Other
+            </CheckBox>
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Margin="5" Name="UpdateBtn" Click="UpdateBtn_OnClick">
+                Обновить
+            </Button>
+        </StackPanel>
+        
+        <ListView Grid.Row="1" Name="ListTests" HorizontalContentAlignment="Stretch">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

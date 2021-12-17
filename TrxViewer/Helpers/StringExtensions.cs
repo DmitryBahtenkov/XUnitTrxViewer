@@ -6,13 +6,13 @@ namespace TrxViewer.Helpers
 {
     public static class StringExtensions
     {
-        public static bool TryDeserializeFromXml<T>(this string xml, out T result)
+        public static bool TryDeserializeFromXml<T>(this string xml, out T? result)
         {
             try
             {
                 var serializer = new XmlSerializer(typeof(T));
                 using var reader = new StringReader(xml);
-                result = (T)serializer.Deserialize(reader);
+                result = (T?)serializer.Deserialize(reader);
                 return true;
             }
             catch (Exception)
