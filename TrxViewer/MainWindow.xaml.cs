@@ -30,8 +30,9 @@ namespace TrxViewer
         public MainWindow()
         {
             InitializeComponent();
-            TrxFrame.Navigate(new TestRunPage(new TrxReaderService(new ConfigurationService())));
-            ConfigFrame.Navigate(new ConfigPage());
+            var configService = new ConfigurationService();
+            TrxFrame.Navigate(new TestRunPage(new TrxReaderService(configService)));
+            ConfigFrame.Navigate(new ConfigPage(configService));
         }
         
     }

@@ -7,14 +7,14 @@ namespace TrxViewer.Services
     public class ConfigurationService
     {
         public const string Path = "config.json";
-        public ConfigurationModel GetConfig()
+        public ConfigurationModel? GetConfig()
         {
             return File.Exists(Path) 
                 ? GetConfigInternal() 
                 : SetDefault();
         }
         
-        private ConfigurationModel GetConfigInternal()
+        private ConfigurationModel? GetConfigInternal()
         {
             using var reader = new StreamReader(Path);
             return JsonSerializer.Deserialize<ConfigurationModel>(reader.ReadToEnd());

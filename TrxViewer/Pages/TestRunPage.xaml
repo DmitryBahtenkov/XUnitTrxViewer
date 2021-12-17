@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:TrxViewer.Pages"
       mc:Ignorable="d"
-      Title="TestRunPage" Height="450" Width="800">
+      Title="TestRunPage" Height="500" Width="1000">
     <Grid>
         <ListView Name="ListTests" HorizontalContentAlignment="Stretch">
             <ListView.ItemContainerStyle>

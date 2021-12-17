@@ -34,7 +34,10 @@ namespace TrxViewer.Services
                     if (testRun is not null)
                     {
                         var testNameRegexp = new Regex(@"\(.*\)");
-                        result = testRun.Results.First().UnitTestResult.Select(x =>
+                        result = testRun.Results.First().UnitTestResult
+                            .OrderBy(x=>x.TestName)
+                            .ThenBy(x=>x.Outcome)
+                            .Select(x =>
                         {
                             x.TestName = x.TestName.Replace("Skillaz.Tests.", "");
                             x.TestName = testNameRegexp.Replace(x.TestName, "").Split(".").Last();
