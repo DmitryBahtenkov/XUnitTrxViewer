@@ -74,8 +74,15 @@ namespace TrxViewer.Pages
                 .Cast<UnitTestResult>()
                 .Select(x=>x.TestName)
                 .ToArray();
-            
-            _testRunService.ExecuteTestsByNames(items);
+
+            if (items.Length == 0)
+            {
+                MessageBox.Show("Не выбраны тесты");
+            }
+            else
+            {
+                _testRunService.ExecuteTestsByNames(items);
+            }
         }
     }
 }
