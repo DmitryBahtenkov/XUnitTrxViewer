@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrxViewer"
         mc:Ignorable="d"
-        Title="Trx Viewer" Height="500" Width="1000">
+        Title="Trx Viewer" Height="600" Width="1050">
     <Grid>
         <TabControl>
             <TabItem >

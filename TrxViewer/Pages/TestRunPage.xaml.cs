@@ -18,7 +18,9 @@ namespace TrxViewer.Pages
             _testRunService = testRunService;
             InitializeComponent();
 
-            _all = _trxReaderService.ReadLast();
+            CmbFiles.ItemsSource = _trxReaderService.GetFiles();
+            CmbFiles.SelectedItem = _trxReaderService.GetLastFile();
+            _all = _trxReaderService.ReadFile(GetSelectedFile());
             ListTests.ItemsSource = _all;
             Counters();
         }
@@ -33,6 +35,16 @@ namespace TrxViewer.Pages
                     : @out);
         }
 
+        private string GetSelectedFile()
+        {
+            if (CmbFiles.SelectedItem is FileModel fileModel)
+            {
+                return fileModel.FullName;
+            }
+
+            return string.Empty;
+        }
+
         private void PassedCheck_OnChecked(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
@@ -40,7 +52,7 @@ namespace TrxViewer.Pages
 
         private void UpdateFilter()
         {
-            _all = _trxReaderService.ReadLast();
+            _all = _trxReaderService.ReadFile(GetSelectedFile());
             var result = new List<UnitTestResult>();
             if (PassedCheck?.IsChecked is true)
             {
@@ -94,6 +106,11 @@ namespace TrxViewer.Pages
                     _testRunService.ExecuteTestsByNames(items);
                     break;
             }
+        }
+
+        private void CmbFiles_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateFilter();
         }
     }
 }
