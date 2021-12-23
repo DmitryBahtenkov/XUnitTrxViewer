@@ -9,8 +9,6 @@ namespace TrxViewer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string Path = @"C:\Users\Andrew\Documents\Workspace\Sharp\TrxViewer\ДмитрийБахтенков_DESKTOP_F6SKA47_2021_12_16_16_16_28.trx";
-
         public MainWindow()
         {
             InitializeComponent();
